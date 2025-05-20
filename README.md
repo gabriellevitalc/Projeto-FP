@@ -1,4 +1,3 @@
-# Projeto-FP
 —--—--- —--VIDA PET—---—--- —--
 
 Nossa plataforma foi desenvolvida para oferecer um cuidado completo e afetivo com os pets, auxiliando tutores, como Camila, que tem dificuldade de administrar as necessidades de seus pets. Nosso sistema, o “Vida Pet”, ajuda a acompanhar e registrar o dia a dia dos pets, com funções que vão do cadastro à análise do humor, oferecendo um controle prático da saúde e bem-estar dos pets. São diversas funcionalidades reunidas em um só lugar para tornar o cuidado com os pets mais simples e eficiente no dia a dia dos tutores.
@@ -7,7 +6,7 @@ Funcionalidades
 A plataforma conta com 5 funcionalidades principais, descritas a seguir:
 
 CRUD
-Permite adicionar, visualizar, editar e excluir registros dos pets, incluindo informações como nome, espécie, raça, data de nascimento e peso*.*
+Permite adicionar, visualizar, editar e excluir registros dos pets, incluindo informações como nome, espécie, raça, data de nascimento e peso**.**
 Cadastro de Cuidados e Eventos
 Permite registrar, visualizar, e marcar como feito os eventos importantes como vacinações, consultas veterinárias e aplicação de remédios, associando-os ao pet correspondente, com datas e observações.
 Metas e Atualizações
