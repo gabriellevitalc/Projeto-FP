@@ -23,7 +23,7 @@ def CRUD():
                 peso = input("Peso em kg: ")
                 int(peso)
                 
-                PETS.append({"Nome": nome, "Espécie": especie, "Raça": raca, "Data": data, "Peso": peso})
+                PETS.append({"Nome": nome, "\nEspécie": especie, "\nRaça": raca, "\nData": data, "\nPeso": peso})
                 print("Pet adicionado com sucesso!")
                 file=open(ARQUIVO_PETS, 'a', encoding='utf-8')
                 file.write(f"{nome}\n")
@@ -62,7 +62,7 @@ def CRUD():
                         novo_peso = input("Peso em kg: ")
                         int(novo_peso)
                         
-                        PETS[i]=({"Nome": novo_nome, "Espécie": nova_especie, "Raça": nova_raca, "Data": nova_data, "Peso": novo_peso})
+                        PETS[i]=({"Nome": novo_nome, "\nEspécie": nova_especie, "\nRaça": nova_raca, "\nData": nova_data, "\nPeso": novo_peso})
                         print("Pet atualizado com sucesso!")
                         break 
                     except ValueError:
