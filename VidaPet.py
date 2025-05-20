@@ -13,15 +13,95 @@ def CRUD():
         while True:    
             try:
                 nome = input("Nome do pet: ").capitalize()
-                especie = input("Espécie (Cachorro/Gato): ").capitalize()
+                while True:
+                    especie = input("Espécie (Cachorro/Gato): ").capitalize()
+                    if especie in ["Cachorro", "Gato"]:
+                        break
+                    else:
+                        print("Espécie Inválida! Digite 'Cachorro' ou 'Gato'")
+                        especie = input("Espécie (Cachorro/Gato): ").capitalize()
+    
                 raca = input("Raça: ").capitalize()
-                data = input("Data de nascimento (DD/MM/AAAA): ")
-                dia, mes, ano = data.split("/",2)
-                int(dia)
-                int(mes)
-                int(ano)
-                peso = input("Peso em kg: ")
-                int(peso)
+                try:
+                    data = input("Data de nascimento (DD/MM/AAAA): ")
+                    dia, mes, ano = data.split("/",2)
+                    int(dia)
+                    if not int(dia)>0:
+                        print("Data inválida!")
+                        data = input("Data de nascimento (DD/MM/AAAA): ")
+                        dia, mes, ano = data.split("/",2)
+                        int(dia)
+                        int(mes)
+                        int(ano)
+                    
+                    int(mes)
+                    
+                    if not int(mes)>0:
+                        print("Data inválida!")
+                        data = input("Data de nascimento (DD/MM/AAAA): ")
+                        dia, mes, ano = data.split("/",2)
+                        int(dia)
+                        int(mes)
+                        int(ano)
+                        
+                    int(ano)
+
+                    if not int(ano)>0:
+                        print("Data inválida!")
+                        data = input("Data de nascimento (DD/MM/AAAA): ")
+                        dia, mes, ano = data.split("/",2)
+                        int(dia)
+                        int(mes)
+                        int(ano)
+                
+                except (ValueError,KeyboardInterrupt):
+                    print("Informação inválida! Digite Novamente.")
+                    data = input("Data de nascimento (DD/MM/AAAA): ")
+                    dia, mes, ano = data.split("/",2)
+                    int(dia)
+                    if not int(dia)>0:
+                        print("Data inválida!")
+                        data = input("Data de nascimento (DD/MM/AAAA): ")
+                        dia, mes, ano = data.split("/",2)
+                        int(dia)
+                        int(mes)
+                        int(ano)
+                    
+                    int(mes)
+                    
+                    if not int(mes)>0:
+                        print("Data inválida!")
+                        data = input("Data de nascimento (DD/MM/AAAA): ")
+                        dia, mes, ano = data.split("/",2)
+                        int(dia)
+                        int(mes)
+                        int(ano)
+                        
+                    int(ano)
+
+                    if not int(ano)>0:
+                        print("Data inválida!")
+                        data = input("Data de nascimento (DD/MM/AAAA): ")
+                        dia, mes, ano = data.split("/",2)
+                        int(dia)
+                        int(mes)
+                        int(ano)
+                
+
+                     
+                try:
+                    peso = input("Peso em kg: ")
+                    int(peso)
+                    if not int(peso)>0:
+                        print("Peso inválido!")
+                        peso = input("Peso em kg: ")
+                        int(peso)
+                except (ValueError,KeyboardInterrupt):
+                    print("Informação inválida! Digite Novamente.")
+                    peso = input("Peso em kg: ")
+                    int(peso)
+
+                    
                 
                 PETS.append({"Nome": nome, "Espécie": especie, "Raça": raca, "Data": data, "Peso": peso})
                 print("Pet adicionado com sucesso!")
@@ -30,58 +110,138 @@ def CRUD():
                 file.close()
                 break
 
-            except ValueError:
+            except (ValueError,KeyboardInterrupt):
                 print("Informação inválida! Digite Novamente.")
-                pass
+        
         
     def visualizar():
-        for nome in PETS:
-            print(nome)
-        print("\n")
+        if not PETS:
+            print("Nenhum pet cadastrado!")
+        else:
+            print("-=-=-=-=Pets Cadastrados-=-=-=-=")
+            for dicionarios in PETS:
+                print(dicionarios)
+            print("\n")
+
+    def editarnomehumor(nome_antigo, novo_nome):
+        try:    
+            with open(HUMOR_PETS, 'r', encoding='utf-8') as f:
+                linhas = []
+                for linha in f:
+                    nomepet, humorpet = linha.strip().split(",",1)
+                    if nomepet == nome_antigo:
+                        linhas.append(f"{novo_nome},{humorpet}")
+                    else:
+                        linhas.append(linha)
+            with open(HUMOR_PETS, 'w', encoding='utf-8') as f2:
+                for elemento in linhas:
+                    f2.write(elemento + '\n')
+        except FileNotFoundError:
+            return
+    
+
+    def editarnomehumornome(nome_antigo, novo_nome):
+        try:    
+            with open(ARQUIVO_PETS, 'r', encoding='utf-8') as f:
+                linhas = []
+                for linha in f:
+                    if linha.strip() == nome_antigo:
+                        linhas.append(novo_nome+"\n")
+                    else:
+                        linhas.append(linha)
+            with open(ARQUIVO_PETS, 'w', encoding='utf-8') as f2:
+                for elemento in linhas:
+                    f2.write(elemento + '\n')
+        except FileNotFoundError:
+            return
 
 
     def editar():
-        for i in range(len(PETS)):
-            print(f"-{PETS[i]["Nome"]}")
-        nome_antigo = input("Digite o nome do pet que você deseja editar: ").capitalize()
-        nomesparaeditar = []
-        for i in range(len(PETS)):
-            nomesparaeditar.append(PETS[i]["Nome"])
-            if (PETS[i]["Nome"])==nome_antigo:
-                while True:
-                    try:    
-                        print("NOVOS DADOS")
-                        novo_nome = input("Digite o nome do pet: ")
-                        nova_especie = input("Espécie (Cachorro/Gato): ").capitalize()
-                        nova_raca = input("Raça: ").capitalize()
-                        nova_data = input("Data de nascimento (DD/MM/AAAA): ")
-                        dia, mes, ano = nova_data.split("/",2)
-                        int(dia)
-                        int(mes)
-                        int(ano)
-                        novo_peso = input("Peso em kg: ")
-                        int(novo_peso)
-                        
-                        PETS[i]=({"Nome": novo_nome, "Espécie": nova_especie, "Raça": nova_raca, "Data": nova_data, "Peso": novo_peso})
-                        print("Pet atualizado com sucesso!")
-                        break 
-                    except ValueError:
-                        print("Informação inválida! Digite Novamente.")
-                        pass
-        if nome_antigo not in nomesparaeditar:
-            print("Pet não encontrado!")
+        if not PETS:
+            print("Nehum pet cadastrado!")
+        else:
+            for i in range(len(PETS)):
+                print(f"-{PETS[i]["Nome"]}")
+            nome_antigo = input("Digite o nome do pet que você deseja editar: ").capitalize()
+            nomesparaeditar = []
+            for i in range(len(PETS)):
+                nomesparaeditar.append(PETS[i]["Nome"])
+                if (PETS[i]["Nome"])==nome_antigo:
+                    while True:
+                        try:    
+                            print("NOVOS DADOS")
+                            novo_nome = input("Digite o nome do pet: ").capitalize()
+                            nova_especie = input("Espécie (Cachorro/Gato): ").capitalize()
+                            nova_raca = input("Raça: ").capitalize()
+                            nova_data = input("Data de nascimento (DD/MM/AAAA): ")
+                            dia, mes, ano = nova_data.split("/",2)
+                            int(dia)
+                            int(mes)
+                            int(ano)
+                            novo_peso = input("Peso em kg: ")
+                            int(novo_peso)
+                            
+                            PETS[i]=({"Nome": novo_nome, "Espécie": nova_especie, "Raça": nova_raca, "Data": nova_data, "Peso": novo_peso})
+                            print("Pet atualizado com sucesso!")
+                            editarnomehumor(nome_antigo, novo_nome)
+                            editarnomehumornome(nome_antigo, novo_nome)
+                            break 
+                        except (ValueError,KeyboardInterrupt):
+                            print("Informação inválida! Digite Novamente.")
+                            pass
+            if nome_antigo not in nomesparaeditar:
+                print("Pet não encontrado!")
+
+
+    def excluirnomehumor(nome_remover):
+        try:    
+            with open(ARQUIVO_PETS, 'r', encoding='utf-8') as f:
+                linhas_filtradas = []
+                for linha in f:
+                    linha = linha.strip()
+                    if not linha:
+                        continue
+                    nome, humor = linha.split(',')
+                    if nome != nome_remover:
+                        linhas_filtradas.append(linha + '\n')
+                with open(ARQUIVO_PETS, 'w', encoding='utf-8') as f:
+                    f.writelines(linhas_filtradas)
+        except FileNotFoundError:
+           return
+
+
+    def excluirnomehumornome(nome_remover):
+        try:    
+            with open(ARQUIVO_PETS, 'r', encoding='utf-8') as f:
+                linhas_filtradas = []
+                for linha in f:
+                    linha = linha.strip()
+                    if not linha:
+                        continue
+                    if linha != nome_remover:
+                        linhas_filtradas.append(linha + '\n')
+                with open(ARQUIVO_PETS, 'w', encoding='utf-8') as f:
+                    f.writelines(linhas_filtradas)
+        except FileNotFoundError:
+           return
+
 
     def remover():
-        for i in range(len(PETS)):
-            print(f"-{PETS[i]["Nome"]}")
-        nome_remover = input("Digite o nome do pet que você deseja excluir: ").capitalize()
-        for i in range(len(PETS)):
-            if PETS[i]["Nome"]==nome_remover: 
-                del PETS[i]
-                print("Pet removido com sucesso!")
-                break
-            else:
-                print("Pet não encontrado.")
+        if not PETS:
+            print("Nenhum pet cadastrado!")
+        else:
+            for i in range(len(PETS)):
+                print(f"-{PETS[i]["Nome"]}")
+            nome_remover = input("Digite o nome do pet que você deseja excluir: ").capitalize()
+            for i in range(len(PETS)):
+                if PETS[i]["Nome"]==nome_remover: 
+                    del PETS[i]
+                    print("Pet removido com sucesso!")
+                    excluirnomehumor(nome_remover)
+                    excluirnomehumornome(nome_remover)
+                    break
+                else:
+                    print("Pet não encontrado.")
 
     def ler_arquivo():
         PETS.clear()
@@ -142,56 +302,72 @@ def CRUD():
 def CUIDADOS():
     def eventos():
         nomes = []
-        for i in range(len(PETS)):
-            nomes.append(PETS[i]["Nome"])
-        while True:
-            try:
-                escolha=input("Escolha o tipo de evento que você deseja registrar: \n1-Vacinação \n2-Consultas Veterinárias \n3-Aplicação de Remédios\n(Escreva o nome): ").capitalize()
-                print("-="*30)
-                print("PETS")
-                for i in range(len(PETS)):
-                    print(f"-{PETS[i]["Nome"]}")
-                nome=input("\nDigite o nome do pet: ").capitalize()
-                if nome in nomes:
-                    data=input("Digite a data do evento (DD/MM/AAA): ")
-                    dia, mes, ano = data.split("/",2)
-                    int(dia)
-                    int(mes)
-                    int(ano)
-                    observacao=input("Observações: ").capitalize()
-                    
-                    EVENTOS.append({"Evento": escolha, "Nome": nome, "Data do evento": data, "Observação": observacao})
-                    print("Evento adicionado com sucesso!")
-                    break
-                else:
-                    print("Pet não encontrado!")
-            except ValueError:
-                print("Informação inválida! Digite Novamente.")
-                pass  
+        if not PETS:
+            print("Nenhum pet cadastrado!")
+        else:
+            for i in range(len(PETS)):
+                nomes.append(PETS[i]["Nome"])
+            while True:
+                try:
+                    escolha=input("Escolha o tipo de evento que você deseja registrar: \n1-Vacinação \n2-Consultas Veterinárias \n3-Aplicação de Remédios\n(Escreva o nome): ").capitalize()
+                    try:
+                        if int(escolha):
+                            print("Escreva o nome referente ao número!")
+                    except ValueError:
+                        continue
+                    if escolha == 'Vacinação' or escolha == 'Consultas Veterinárias' or escolha == 'Aplicação de Remédios':
+                        print("-="*30)
+                        print("PETS")
+                        for i in range(len(PETS)):
+                            print(f"-{PETS[i]["Nome"]}")
+                        nome=input("\nDigite o nome do pet: ").capitalize()
+                        if nome in nomes:
+                            data=input("Digite a data do evento (DD/MM/AAA): ")
+                            dia, mes, ano = data.split("/",2)
+                            int(dia)
+                            int(mes)
+                            int(ano)
+                            
+                            observacao=input("Observações: ").capitalize()
+                            
+                            EVENTOS.append({"Evento": escolha, "Nome": nome, "Data do evento": data, "Observação": observacao})
+                            print("Evento adicionado com sucesso!")
+                            break
+                        else:
+                            print("Pet não encontrado!")
+                except ValueError:
+                    print("Informação inválida! Digite Novamente.")
+                    pass  
             
     def visualizar():
-        try:
-            for nome in EVENTOS:
-                print(nome)
-            print("\n")
-        except FileNotFoundError:
-            print("Arquivo não encontrado.")
+        if not EVENTOS:
+            print("Nenhum evento registrado!")
+        else:
+            try:
+                for nome in EVENTOS:
+                    print(nome)
+                print("\n")
+            except FileNotFoundError:
+                print("Arquivo não encontrado.")
 
 
 
     def acompanhar():
-        for i in range(len(EVENTOS)):
-            print("-="*30)
-            print(f"-{EVENTOS[i]["Nome"]}: {EVENTOS[i]["Evento"]}")
-        nome_escolhido=input("Qual o nome do pet de quem você deseja marcar o evento como feito? ").capitalize()
-        for i in range(len(EVENTOS)):
-            if (EVENTOS[i]["Nome"])==nome_escolhido: 
-                del EVENTOS[i]
-                print(f"Evento de {nome_escolhido} removido com sucesso.")
-                break
-            else:
-                print("Registro não encontrado.")
-                
+        if not EVENTOS:
+            print("Nenhum evento cadastrado!")
+        else:
+            for i in range(len(EVENTOS)):
+                print("-="*30)
+                print(f"-{EVENTOS[i]["Nome"]}: {EVENTOS[i]["Evento"]}")
+            nome_escolhido=input("Qual o nome do pet de quem você deseja marcar o evento como feito? ").capitalize()
+            for i in range(len(EVENTOS)):
+                if (EVENTOS[i]["Nome"])==nome_escolhido: 
+                    del EVENTOS[i]
+                    print(f"Evento de {nome_escolhido} removido com sucesso.")
+                    break
+                else:
+                    print("Registro não encontrado.")
+                    
 
     def gravar_arquivo():
         arquivo = open("eventos.txt", "w", encoding="utf-8")
@@ -364,7 +540,18 @@ def HUMOR():
                     for linha in f:
                         linha = linha.strip()
                         if linha:
-                            nomes.append(linha)        
+                            nomes.append(linha)    
+            try:
+                with open(HUMOR_PETS, 'r', encoding='utf-8') as f2:
+                    conteudo = f2.read().strip()
+                    if not conteudo:
+                        print("-="*30)
+                        print("Nenhum humor registrado! Não é possível sugerir melhorias.")
+                        return
+            except FileNotFoundError:
+                print("-="*30)
+                print("Nenhum humor registrado! Não é possível sugerir melhorias.")
+                return      
 
             for pet in nomes:
                 soma = 0
@@ -386,19 +573,18 @@ def HUMOR():
                 except FileNotFoundError:
                     print("-="*30)
                     print("Nenhum humor registrado! Dessa forma não é possivel sugerir melhorias para aumentar ou manter o humor.")
+                    return
                 if cont>0:
                     media = soma/cont
                     print("-="*30)
-                    print("\nSUGESTÕES")
+                    print("SUGESTÕES")
                     print(AcoesHumor(media, cont, pet))
                     print("-="*30)
-                else:
-                    print("-="*30)
-                    print("Nenhum humor registrado! Dessa forma não é possivel sugerir melhorias para aumentar ou manter o humor.")
+                
         except FileNotFoundError:
             print("-="*30)
             print("Nenhum pet registrado!")
-
+            return
                 
     def ConfirmacaoExistenciaPet(nome):
         try:    
@@ -523,6 +709,39 @@ def HUMOR():
             print("Não há nenhum pet registrado! Não foi possível visualizar o humor.")
             return
         print("-="*30)
+
+
+    def editarnomehumor(nome_antigo, novo_nome):
+        try:    
+            with open(HUMOR_PETS, 'r', encoding='utf-8') as f:
+                linhas = []
+                for linha in f:
+                    nomepet, humorpet = linha.strip().split(",",1)
+                    if nomepet == nome_antigo:
+                        linhas.append(f"{novo_nome},{humorpet}")
+                    else:
+                        linhas.append(linha)
+            with open(HUMOR_PETS, 'w', encoding='utf-8') as f2:
+                for elemento in linhas:
+                    f2.write(elemento + '\n')
+        except FileNotFoundError:
+            return
+    
+
+    def editarnomehumornome(nome_antigo, novo_nome):
+        try:    
+            with open(ARQUIVO_PETS, 'r', encoding='utf-8') as f:
+                linhas = []
+                for linha in f:
+                    if linha.strip() == nome_antigo:
+                        linhas.append(novo_nome,"\n")
+                    else:
+                        linhas.append(linha)
+            with open(ARQUIVO_PETS, 'w', encoding='utf-8') as f2:
+                for elemento in linhas:
+                    f2.write(elemento + '\n')
+        except FileNotFoundError:
+            return
 
 
 
@@ -656,93 +875,97 @@ def ler_arquivo():
 def META():
     opc = 0
     global quantMC
+    while True:
+            print("\n1 - Adicionar / 2 - Atualizar / 3- Visualizar / 4 - Sair ")
+            try:
+                opc = int(input("\nQual opcao? "))
+                if opc == 1:
+                    for i in range(len(PETS)):
+                        print(f"-{PETS[i]["Nome"]}")
+                    escolha = input("\nPara qual pet você quer estabelecer uma meta? ").capitalize()
+                    for i in range(len(PETS)):
+                        if (PETS[i]["Nome"])==escolha:
+                            acao = input(f"\nQual a meta definida para o pet {escolha}? ")
+                            relacao_tempo = input("\nEssa meta será diária, semanal, mensal ou anual? (D / S / M / A): ").lower()
+                            if relacao_tempo == "d":
+                                frequencia = float(input("\nCom que frequência você quer realizá-la?  "))
+                                METAS[quantMC]=(f"{quantMC}ª META -> {escolha} -> {acao} {frequencia} vezes por dia")
+                            elif relacao_tempo == "s":
+                                tipo_semana = int(input("\nEscolha qual tipo será: 1 - por semana / 2 - a cada x semanas "))
+                                if tipo_semana == 1:
+                                    frequencia = float(input("\nCom que frequência você quer realizá-la?  "))
+                                    METAS[quantMC]=(f"{quantMC}ª META -> {escolha} -> {acao} {frequencia} vezes por semana")
+                                    print("\nMeta registrada com sucesso!")
+                                elif tipo_semana == 2:
+                                    frequencia = float(input("\nCom que frequência você quer realizá-la?  "))
+                                    METAS[quantMC]=(f"{quantMC}ª META -> {escolha} -> {acao} a cada {frequencia} semanas")
+                                    print("\nMeta registrada com sucesso!")
+                            elif relacao_tempo == "m":
+                                tipo_mes = int(input("\nEscolha qual tipo será: 1 - por mês / 2 - a cada x meses "))
+                                if tipo_mes == 1:
+                                    frequencia = float(input("\nCom que frequência você quer realizá-la?  "))
+                                    METAS[quantMC]=(f"{quantMC}ª META -> {escolha} -> {acao} {frequencia} vezes por mês")
+                                    print("\nMeta registrada com sucesso!")
+                                elif tipo_mes == 2:
+                                    frequencia = float(input("\nCom que frequência você quer realizá-la?  "))
+                                    METAS[quantMC]=(f"{quantMC}ª META -> {escolha} -> {acao} a cada {frequencia} meses ")
+                                    print("\nMeta registrada com sucesso!")
+                            elif relacao_tempo == "a":
+                                tipo_ano = int(input("\nEscolha qual tipo será: 1 - por ano / 2 - a cada x anos "))
+                                if tipo_ano == 1:
+                                    frequencia = float(input("\nCom que frequência você quer realizá-la?  "))
+                                    METAS[quantMC]=(f"{quantMC}ª META -> {escolha} -> {acao} {frequencia} vezes por ano")
+                                    print("\nMeta registrada com sucesso!")
+                                elif tipo_ano == 2: 
+                                    frequencia = float(input("\nCom que frequência você quer realizá-la?  "))
+                                    METAS[quantMC]=(f"{quantMC}ª META -> {escolha} -> {acao} a cada {frequencia} anos ")
+                                    print("\nMeta registrada com sucesso!")
+                            else:
+                                print("Informação inválida! Digite novamente!")
+                            break
+                        else:
+                            print("Pet não encontrado.")    
 
-    print("1 - Adicionar / 2 - Atualizar / 3- Visualizar")
-    try:
-        opc = int(input("Qual opcao? "))
-        if opc == 1:
-            for i in range(len(PETS)):
-                print(f"-{PETS[i]["Nome"]}")
-            escolha = input("\nPara qual pet você quer estabelecer uma meta? ").capitalize()
-            for i in range(len(PETS)):
-                if (PETS[i]["Nome"])==escolha:
-                    acao = input(f"\nQual a meta definida para o pet {escolha}? ")
-                    relacao_tempo = input("\nEssa meta será diária, semanal, mensal ou anual? (D / S / M / A): ").lower()
-                    if relacao_tempo == "d":
-                        frequencia = float(input("\nCom que frequência você quer realizá-la?  "))
-                        METAS[quantMC]=(f"{quantMC}ª META -> {escolha} -> {acao} {frequencia} vezes por dia")
-                    elif relacao_tempo == "s":
-                        tipo_semana = int(input("\nEscolha qual tipo será: 1 - por semana / 2 - a cada x semanas "))
-                        if tipo_semana == 1:
-                            frequencia = float(input("\nCom que frequência você quer realizá-la?  "))
-                            METAS[quantMC]=(f"{quantMC}ª META -> {escolha} -> {acao} {frequencia} vezes por semana")
-                            print("\nMeta registrada com sucesso!")
-                        elif tipo_semana == 2:
-                            frequencia = float(input("\nCom que frequência você quer realizá-la?  "))
-                            METAS[quantMC]=(f"{quantMC}ª META -> {escolha} -> {acao} a cada {frequencia} semanas")
-                            print("\nMeta registrada com sucesso!")
-                    elif relacao_tempo == "m":
-                        tipo_mes = int(input("\nEscolha qual tipo será: 1 - por mês / 2 - a cada x meses "))
-                        if tipo_mes == 1:
-                            frequencia = float(input("\nCom que frequência você quer realizá-la?  "))
-                            METAS[quantMC]=(f"{quantMC}ª META -> {escolha} -> {acao} {frequencia} vezes por mês")
-                            print("\nMeta registrada com sucesso!")
-                        elif tipo_mes == 2:
-                            frequencia = float(input("\nCom que frequência você quer realizá-la?  "))
-                            METAS[quantMC]=(f"{quantMC}ª META -> {escolha} -> {acao} a cada {frequencia} meses ")
-                            print("\nMeta registrada com sucesso!")
-                    elif relacao_tempo == "a":
-                        tipo_ano = int(input("\nEscolha qual tipo será: 1 - por ano / 2 - a cada x anos "))
-                        if tipo_ano == 1:
-                            frequencia = float(input("\nCom que frequência você quer realizá-la?  "))
-                            METAS[quantMC]=(f"{quantMC}ª META -> {escolha} -> {acao} {frequencia} vezes por ano")
-                            print("\nMeta registrada com sucesso!")
-                        elif tipo_ano == 2: 
-                            frequencia = float(input("\nCom que frequência você quer realizá-la?  "))
-                            METAS[quantMC]=(f"{quantMC}ª META -> {escolha} -> {acao} a cada {frequencia} meses ")
-                            print("\nMeta registrada com sucesso!")
+                    PROGRESSO[quantMC] = 0
+                    print(f"\n {METAS}")
+                    quantMC+=1
+                    gravar_metas()
+                elif opc == 2:
+                    if not METAS:
+                        print("\nNão há metas registradas.")
                     else:
-                        print("Informação inválida! Digite novamente!")
-
+                        total_feito = 0
+                        print("\nMetas: ")
+                        for i in METAS:
+                            print(f"{i}: {METAS[i]}")
+                        numupd = int(input("\nQual meta será atualizada? "))
+                        cumprido = float(input("\nQuantos % você ja cumpriu da meta? "))
+                        if cumprido >0:
+                            PROGRESSO[numupd] += cumprido
+                                    
+                            if PROGRESSO[numupd] >=100:
+                                print("\nParabéns! Você cumpriu a meta!")
+                                del METAS[numupd]
+                                del PROGRESSO[numupd]
+                            else:
+                                print(f"\nAinda faltam {100 - PROGRESSO[numupd]} % da meta")
+                        else:
+                            print("Valor inválido!")
+                            continue
+                        gravar_metas()
+                elif opc==3:
+                    if not METAS:
+                        print("\nNão há metas registradas.")
+                    else:
+                        print("\nMetas: ")
+                        for i in METAS:
+                            print(f"{i}: {METAS[i]}")
+                elif opc == 4:
                     break
-                else:
-                    print("Pet não encontrado.")    
-
-            PROGRESSO[quantMC] = 0
-            print(f"\n {METAS}")
-            quantMC+=1
-            gravar_metas()
-        elif opc == 2:
-            if not METAS:
-                print("\nNão há metas registradas.")
-            else:
-                total_feito = 0
-                print("\nMetas: ")
-                for i in METAS:
-                    print(f"{i}: {METAS[i]}")
-                numupd = int(input("\nQual meta será atualizada? "))
-                cumprido = float(input("\nQuantos % você ja cumpriu da meta? "))
-                PROGRESSO[numupd] += cumprido
-                        
-                if PROGRESSO[numupd] >=100:
-                    print("\nParabéns! Você cumpriu a meta!")
-                    del METAS[numupd]
-                    del PROGRESSO[numupd]
-                else:
-                    print(f"\nAinda faltam {100 - PROGRESSO[numupd]} % da meta")
-                gravar_metas()
-        elif opc==3:
-            if not METAS:
-                print("\nNão há metas registradas.")
-            else:
-                print("\nMetas: ")
-                for i in METAS:
-                    print(f"{i}: {METAS[i]}")
-
-    except ValueError:
-        print("Informação inválida! Digite Novamente.")
-        pass
-        return METAS , PROGRESSO, quantMC
+            except (ValueError, KeyboardInterrupt):
+                print("\nInformação inválida! Digite Novamente. ")
+                pass
+    return METAS , PROGRESSO, quantMC
 
 def ler_metas():
     try:
@@ -794,5 +1017,5 @@ while True:
                 break
             else:
                 print("Opção Inválida! Tente Novamente.")
-    except ValueError:
+    except (ValueError, KeyboardInterrupt):
             print("Opção Inválida! Digite um número.")
